@@ -10,11 +10,12 @@
           modulesPath,
           pkgs,
           ...
-        }: 
-        { 
+        }:
+        {
           imports = [
             (modulesPath + "/installer/scan/not-detected.nix")
             (modulesPath + "/profiles/qemu-guest.nix")
+            inputs.sops.nixosModules.sops
             (
               { lib, ... }:
               {
@@ -76,6 +77,12 @@
             efiInstallAsRemovable = true;
           };
 
+          sops.defaultSopsFile = ../../secrets/secret.yaml;
+          sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+          sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+          sops.age.generateKey = true;
+          sops.secrets.mongodb = { };
+
           services.openssh.enable = true;
           services.traefik.enable = true;
           services.traefik.staticConfigFile = pkgs.writeTextFile {
@@ -100,47 +107,47 @@
           };
 
           nixpkgs.overlays = [
-            (_:prev: {
-              mongodb = with prev; stdenv.mkDerivation {
-                name = "mongodb";
-                pname = "mongodb";
+            (_: prev: {
+              mongodb =
+                with prev;
+                stdenv.mkDerivation {
+                  name = "mongodb";
+                  pname = "mongodb";
 
-                src = fetchurl {
-                  # https://www.mongodb.com/try/download/community-edition/releases
-                  url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz";
-                  hash = "sha256-tM+MquEIeFE17Mi4atjtbfXW77hLm5WlDsui/CRs4IQ=";
-                };
+                  src = fetchurl {
+                    # https://www.mongodb.com/try/download/community-edition/releases
+                    url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz";
+                    hash = "sha256-tM+MquEIeFE17Mi4atjtbfXW77hLm5WlDsui/CRs4IQ=";
+                  };
 
-                dontBuild = true;
-                dontConfigure = true;
+                  dontBuild = true;
+                  dontConfigure = true;
 
-                nativeBuildInputs = [
-                  autoPatchelfHook
-                ];
+                  nativeBuildInputs = [
+                    autoPatchelfHook
+                  ];
 
-                buildInputs =
-                  [
+                  buildInputs = [
                     stdenv.cc.cc.libgcc
                     curl
                     openssl
                   ];
 
-                installPhase = ''
-                  runHook preInstall
+                  installPhase = ''
+                    runHook preInstall
 
-                  mkdir -p $out/bin
-                  cp bin/mongod $out/bin/
+                    mkdir -p $out/bin
+                    cp bin/mongod $out/bin/
 
-                  runHook postInstall
-                '';
-              }
-            ;
+                    runHook postInstall
+                  '';
+                };
             })
           ];
 
           services.mongodb = {
             enable = true;
-            package = pkgs.mongodb; 
+            package = pkgs.mongodb;
             # Oddly the auth/initialRootPassword didn't work
             pidFile = "/run/mongodb/mongodb.pid";
             extraConfig = ''

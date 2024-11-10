@@ -21,6 +21,8 @@
           environment.systemPackages = [
             pkgs.sops
           ];
+
+          programs.gnupg.agent.enable = true;
         }
       )
     ];
