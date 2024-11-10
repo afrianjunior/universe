@@ -9,7 +9,7 @@
     system = "aarch64-darwin";
     modules = [
       (
-        { pkgs }:
+        { pkgs, ... }:
         {
           system.stateVersion = 5;
           services.nix-daemon.enable = true;
@@ -17,6 +17,10 @@
 
           # keep on ventura
           ids.uids.nixbld = 300;
+
+          environment.systemPackages = [
+            pkgs.sops
+          ];
         }
       )
     ];

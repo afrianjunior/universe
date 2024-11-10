@@ -2,7 +2,6 @@
   imports = [
     ./machine
     ./home
-    ./pkgs
   ];
 
   perSystem =
