@@ -1,12 +1,11 @@
 keys:
-  - &juun 3BE0D40337391EAFBBE324B142A74ED0B66BCE27
-  - &juun-server age1j00ptf0scuwt5mpthyawws2ap84hz4tvssvfqmj0kpx9l57s5a4sf2uw49
+  - &juun gpg: 3BE0D40337391EAFBBE324B142A74ED0B66BCE27
+  - &juun-server age: age12xs05k43l5zrywv8873w7z58mpuf32dqp037my8f2xek27zud3qswn4773
 
 creation_rules:
   - path_regex: secrets/(?:[^/]+/)*[^/]+\.(yaml|json|env|ini|norg)$
     key_groups:
     - pgp:
         - *juun
-      age: 
+    - age:
         - *juun-server
-

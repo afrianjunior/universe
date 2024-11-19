@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 {
-  flake.nixosConfigurations.juun-nix-server = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.big-server = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
       inputs.disko.nixosModules.disko
@@ -9,6 +9,7 @@
         {
           modulesPath,
           pkgs,
+          config,
           ...
         }:
         {
@@ -72,16 +73,20 @@
             )
           ];
 
+          sops = {
+            defaultSopsFile = ./secret.yaml;
+            age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+            secrets = {
+              mongodb_root_password =
+                {
+                };
+            };
+          };
+
           boot.loader.grub = {
             efiSupport = true;
             efiInstallAsRemovable = true;
           };
-
-          sops.defaultSopsFile = ../../secrets/secret.yaml;
-          sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-          sops.age.keyFile = "/var/lib/sops-nix/key.txt";
-          sops.age.generateKey = true;
-          sops.secrets.mongodb = { };
 
           services.openssh.enable = true;
           services.traefik.enable = true;
@@ -148,7 +153,8 @@
           services.mongodb = {
             enable = true;
             package = pkgs.mongodb;
-            # Oddly the auth/initialRootPassword didn't work
+            # enableAuth = true;
+            # initialRootPassword = config.sops.placeholder.mongodb_root_password;
             pidFile = "/run/mongodb/mongodb.pid";
             extraConfig = ''
               net:
@@ -162,25 +168,36 @@
                 authenticationMechanisms: SCRAM-SHA-256
             '';
           };
-          systemd.services.mongodb.serviceConfig = {
-            RuntimeDirectory = "mongodb";
+          systemd.services.mongodb = {
+            serviceConfig = {
+              RuntimeDirectory = "mongodb";
 
-            # https://www.mongodb.com/docs/manual/reference/ulimit
-            LimitFSIZE = "infinity";
-            LimitCPU = "infinity";
-            LimitAS = "infinity";
-            LimitMEMLOCK = "infinity";
-            LimitNOFILE = 64000;
-            LimitNPROC = 64000;
+              # https://www.mongodb.com/docs/manual/reference/ulimit
+              LimitFSIZE = "infinity";
+              LimitCPU = "infinity";
+              LimitAS = "infinity";
+              LimitMEMLOCK = "infinity";
+              LimitNOFILE = 64000;
+              LimitNPROC = 64000;
+              preStart = ''
+                MONGODB_ROOT_PASSWORD=$(cat ${config.sops.secrets.mongodb_root_password.path})
+                ${pkgs.mongodb}/bin/mongod --eval "db.changeUserPassword(\"mongodb\", \"$MONGODB_ROOT_PASSWORD\")"
+              '';
+            };
+
+            after = [ "sops-nix.service" ];
           };
 
           nixpkgs.config.allowUnfree = true;
 
-          environment.systemPackages = [
-            pkgs.curl
-            pkgs.gitMinimal
-            pkgs.neofetch
-            pkgs.lunarvim
+          environment.systemPackages = with pkgs; [
+            curl
+            gitMinimal
+            neofetch
+            lunarvim
+            sops
+            age
+            ssh-to-age
           ];
 
           networking.firewall = {
@@ -189,6 +206,7 @@
               80
               443
               22
+              27017
             ];
           };
 

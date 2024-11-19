@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./server.nix
+    ./servers/big
   ];
 
   flake.darwinConfigurations.juun = inputs.nix-darwin.lib.darwinSystem {

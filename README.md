@@ -23,7 +23,7 @@ nix run nixpkgs#sops -- encrypt secrets/secret.yaml -i
 
 ### Decrypt
 ``` shell
-nix run nixpkgs#sops -- -d secrets/secret.yaml
+nix run nixpkgs#sops -- decrypt -i secrets/secret.yaml
 ```
 
 ### Update keys if add new key on .sops.yaml

@@ -1,6 +1,6 @@
 {
   imports = [
-    ./machine
+    ./machines
     ./home
   ];
 
