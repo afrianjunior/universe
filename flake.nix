@@ -38,7 +38,7 @@
     # disk managment (server)
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # development env
     devenv.url = "github:cachix/devenv";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
@@ -46,5 +46,8 @@
     # Secret Ops
     sops.url = "github:Mic92/sops-nix";
     sops.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Compose Process
+    process-compose-flake.url = "github:Platonic-Systems/process-compose-flake";
   };
 }

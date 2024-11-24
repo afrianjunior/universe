@@ -71,6 +71,7 @@
                 };
               }
             )
+            inputs.flake-parts.nixosModules.flakeParts
           ];
 
           sops = {
@@ -79,6 +80,42 @@
             secrets = {
               mongodb_root_password =
                 {
+                };
+            };
+          };
+
+          flakeParts = {
+            processCompose = {
+              imports = [
+                inputs.process-compose-flake.flakeModule
+              ];
+              perSystem =
+                {
+                  pkgs,
+                  lib,
+                  ...
+                }:
+                {
+                  process-compose."default" = {
+                    cli = {
+                      options = {
+                        no-server = true;
+                      };
+                    };
+                    settings = {
+                      environment = {
+                        SQLITE_WEB_PASSWORD = "demo";
+                      };
+                      processes = {
+                        ponysay.command = ''
+                          while true; do
+                            ${lib.getExe pkgs.ponysay} "Enjoy our sqlite-web demo!"
+                            sleep 2
+                          done
+                        '';
+                      };
+                    };
+                  };
                 };
             };
           };
@@ -150,43 +187,44 @@
             })
           ];
 
-          services.mongodb = {
-            enable = true;
-            package = pkgs.mongodb;
-            # enableAuth = true;
-            # initialRootPassword = config.sops.placeholder.mongodb_root_password;
-            pidFile = "/run/mongodb/mongodb.pid";
-            extraConfig = ''
-              net:
-                unixDomainSocket:
-                  enabled: true
-                  filePermissions: 0777
-                  pathPrefix: "/run/mongodb"
+          # services.mongodb = {
+          #   enable = true;
+          #   package = pkgs.mongodb;
+          #   bind_ip = "0.0.0.0";
+          #   pidFile = "/run/mongodb/mongodb.pid";
+          #   extraConfig = ''
+          #     net:
+          #       unixDomainSocket:
+          #         enabled: true
+          #         filePermissions: 0777
+          #         pathPrefix: "/run/mongodb"
 
-              security.authorization: enabled
-              setParameter:
-                authenticationMechanisms: SCRAM-SHA-256
-            '';
-          };
-          systemd.services.mongodb = {
-            serviceConfig = {
-              RuntimeDirectory = "mongodb";
+          #     security.authorization: enabled
+          #     setParameter:
+          #       authenticationMechanisms: SCRAM-SHA-256
+          #   '';
+          # };
 
-              # https://www.mongodb.com/docs/manual/reference/ulimit
-              LimitFSIZE = "infinity";
-              LimitCPU = "infinity";
-              LimitAS = "infinity";
-              LimitMEMLOCK = "infinity";
-              LimitNOFILE = 64000;
-              LimitNPROC = 64000;
-              preStart = ''
-                MONGODB_ROOT_PASSWORD=$(cat ${config.sops.secrets.mongodb_root_password.path})
-                ${pkgs.mongodb}/bin/mongod --eval "db.changeUserPassword(\"mongodb\", \"$MONGODB_ROOT_PASSWORD\")"
-              '';
-            };
+          # systemd.services.mongodb = {
+          #   serviceConfig = {
+          #     RuntimeDirectory = "mongodb";
 
-            after = [ "sops-nix.service" ];
-          };
+          #     # https://www.mongodb.com/docs/manual/reference/ulimit
+          #     LimitFSIZE = "infinity";
+          #     LimitCPU = "infinity";
+          #     LimitAS = "infinity";
+          #     LimitMEMLOCK = "infinity";
+          #     LimitNOFILE = 64000;
+          #     LimitNPROC = 64000;
+          #     ExecStartPre = ''
+          #       MONGODB_ROOT_PASSWORD=$(cat ${config.sops.secrets.mongodb_root_password.path})
+          #       echo $MONGODB_ROOT_PASSWORD;
+          #       ${pkgs.mongodb}/bin/mongod --eval "db.createUser({user: \\\"jun\\\", pwd: \\\"$MONGODB_ROOT_PASSWORD\\\", roles: [\\\"root\\\"]})"
+          #     '';
+          #   };
+
+          #   after = [ "sops-nix.service" ];
+          # };
 
           nixpkgs.config.allowUnfree = true;
 
@@ -197,7 +235,7 @@
             lunarvim
             sops
             age
-            ssh-to-age
+            mongosh
           ];
 
           networking.firewall = {

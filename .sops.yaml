@@ -7,5 +7,5 @@ creation_rules:
     key_groups:
     - pgp:
         - *juun
-    - age:
+      age:
         - *juun-server
