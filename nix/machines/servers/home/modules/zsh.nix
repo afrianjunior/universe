@@ -3,9 +3,9 @@
 {
   programs.zsh = {
     enable = true;
-    enableAutosuggestions.enable = true;
-    enableCompletion.enable = true;
-    enableSyntaxHighlighting = true;
+    autosuggestions.enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
 
     oh-my-zsh = {
       enable = true;
