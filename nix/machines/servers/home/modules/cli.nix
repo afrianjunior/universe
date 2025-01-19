@@ -1,11 +1,13 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
+    gitMinimal
     ripgrep
     fd
     bat
     exa
     htop
     tmux
+    neofetch
   ];
 
   home.file.".config/tmux/tmux.conf".text = ''

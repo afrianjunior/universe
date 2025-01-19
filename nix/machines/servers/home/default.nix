@@ -5,6 +5,7 @@
       pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
 
       modules = [
+        ./modules
         {
           home = {
             username = "juunn";
