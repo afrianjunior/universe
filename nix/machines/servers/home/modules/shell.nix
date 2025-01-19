@@ -7,12 +7,6 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-    ohMyZsh = {
-      enable = true;
-      plugins = ["git"];
-      theme = "robbyrussell";
-    };
-
     shellAliases = {
       ll = "ls -l";
       update = "sudo nixos-rebuild switch";

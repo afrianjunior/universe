@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
     ./cli.nix
-    ./zsh.nix
+    ./shell.nix
   ];
 }
