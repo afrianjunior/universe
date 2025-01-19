@@ -42,7 +42,4 @@
       }
     ];
   };
-
-  # Ensure zsh is the default shell
-  users.defaultUserShell = pkgs.zsh;
 }
