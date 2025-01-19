@@ -47,5 +47,7 @@
     sops.url = "github:Mic92/sops-nix";
     sops.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Raspberry PI
+    nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 }
