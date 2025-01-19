@@ -5,7 +5,7 @@ let
   pkgs = nixpkgs.legacyPackages.${system};
 in {
   homeConfigurations = {
-    "juun" = home-manager.lib.homeManagerConfiguration {
+    "home-server" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       
       modules = [
