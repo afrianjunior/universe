@@ -1,30 +1,21 @@
-{ nixpkgs, home-manager, ... }:
+{ inputs, nixpkgs, home-manager, ... }:
 
-let
-  system = "aarch64-linux";
-  pkgs = nixpkgs.legacyPackages.${system};
-in {
-  homeConfigurations = {
-    "home-server" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      
+{
+  flake = {
+    homeConfigurations."home-server" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.aarch66-linux;
+
       modules = [
+        ./modules/cli.nix
         {
-          imports = [
-            ./modules/cli.nix
-          ];
-
           home = {
             username = "juunn";
-            homeDirectory = "/home/";
+            homeDirectory = "/home/pi";
             stateVersion = "23.11";
           };
-
           programs.home-manager.enable = true;
         }
       ];
     };
-    
   };
 }
-
