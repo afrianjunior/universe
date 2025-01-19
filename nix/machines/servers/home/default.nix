@@ -1,8 +1,8 @@
-{ inputs, nixpkgs, ... }:
+{ inputs, ... }:
 
 {
   flake.homeConfigurations.home-server = inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.aarch64-linux;
+      pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
 
       modules = [
         {
