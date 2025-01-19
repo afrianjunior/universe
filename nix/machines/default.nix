@@ -3,6 +3,7 @@
 {
   imports = [
     ./servers/big
+    ./server/home-server
   ];
 
   flake.darwinConfigurations.juun = inputs.nix-darwin.lib.darwinSystem {
