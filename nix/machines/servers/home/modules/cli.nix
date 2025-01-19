@@ -3,8 +3,6 @@
     gitMinimal
     ripgrep
     fd
-    bat
-    exa
     htop
     tmux
     neofetch
