@@ -1,6 +1,6 @@
 keys:
   - &juun 3BE0D40337391EAFBBE324B142A74ED0B66BCE27
-  - &juun-server age12xs05k43l5zrywv8873w7z58mpuf32dqp037my8f2xek27zud3qswn4773
+  - &juun-server age1dzn365xsvkqgczmk8dfdhzqvql9ft4luc642naswxf7mcftuzv7swlw34t
 
 creation_rules:
   - path_regex: nix/(?:[^/]+/)*[^/]+\.(yaml|json|env|ini|norg)$

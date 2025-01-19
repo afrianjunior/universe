@@ -20,6 +20,8 @@
 
           environment.systemPackages = [
             pkgs.sops
+            pkgs.openvpn
+            pkgs.devenv
           ];
 
           programs.gnupg.agent.enable = true;

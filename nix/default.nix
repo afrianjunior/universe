@@ -18,9 +18,9 @@
 
       devShells = {
         default = pkgs.mkShell {
-          shellHook = ''
-            ${config.pre-commit.installationScript}
-          '';
+          # shellHook = ''
+          #   ${config.pre-commit.installationScript}
+          # '';
         };
 
         nodejs = pkgs.mkShell {

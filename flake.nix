@@ -47,7 +47,5 @@
     sops.url = "github:Mic92/sops-nix";
     sops.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Compose Process
-    process-compose-flake.url = "github:Platonic-Systems/process-compose-flake";
   };
 }
