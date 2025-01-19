@@ -32,7 +32,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # home manager
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # disk managment (server)

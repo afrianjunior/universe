@@ -1,4 +1,4 @@
-{ inputs, nixpkgs, home-manager, ... }:
+{ nixpkgs, home-manager, ... }:
 
 {
   flake = {
@@ -6,7 +6,6 @@
       pkgs = nixpkgs.legacyPackages.aarch64-linux;
 
       modules = [
-        ./modules/cli.nix
         {
           home = {
             username = "juunn";
