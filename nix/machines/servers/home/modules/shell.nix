@@ -9,13 +9,15 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = ["git"];
+      plugins = [
+        "git"
+        "systemd"
+      ];
       theme = "robbyrussell";
     };
 
     shellAliases = {
       ll = "ls -l";
-      update = "sudo nixos-rebuild switch";
     };
   };
 }
