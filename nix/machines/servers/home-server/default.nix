@@ -2,7 +2,7 @@
 
 {
   flake = {
-    homeConfigurations."home-server" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.home-server = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.aarch66-linux;
 
       modules = [
