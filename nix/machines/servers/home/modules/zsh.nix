@@ -7,7 +7,7 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-    oh-my-zsh = {
+    ohMyZsh = {
       enable = true;
       plugins = ["git"];
       theme = "robbyrussell";
