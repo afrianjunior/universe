@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   flake.homeConfigurations.home-server = inputs.home-manager.lib.homeManagerConfiguration {
@@ -16,7 +16,7 @@
 
           virtualisation.docker = {
             enable = true;
-            package = inputs.nixpkgs.docker;
+            package = pkgs.docker;
           };
         }
       ];
