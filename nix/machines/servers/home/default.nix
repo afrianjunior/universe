@@ -13,6 +13,11 @@
             stateVersion = "23.11";
           };
           programs.home-manager.enable = true;
+
+          virtualisation.docker = {
+            enable = true;
+            package = inputs.nixpkgs.docker;
+          };
         }
       ];
   };

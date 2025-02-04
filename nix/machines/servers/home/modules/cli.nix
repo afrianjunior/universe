@@ -6,6 +6,7 @@
     htop
     tmux
     neofetch
+    docker
   ];
 
   home.file.".config/tmux/tmux.conf".text = ''

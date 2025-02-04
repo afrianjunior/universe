@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
     ./cli.nix
-    ./shell.nix
+    ../../../../modules/shells.nix
   ];
 }
