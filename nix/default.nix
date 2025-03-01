@@ -1,8 +1,22 @@
+{ inputs, ... }:
 {
   imports = [
+    inputs.ez-configs.flakeModule
     ./machines
-    ./home
   ];
+
+  ezConfigs = {
+    root = ./.;
+    home.modulesDirectory = ./modules/home;
+    home.configurationsDirectory = ./configurations/home;
+
+    nixos.modulesDirectory = ./modules/nixos;
+    nixos.configurationsDirectory = ./configurations/nixos;
+
+    nixos.hosts = {
+      juunnx.userHomeModules = ["juunnx"];
+    };
+  };
 
   perSystem =
     {

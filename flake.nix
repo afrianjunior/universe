@@ -49,5 +49,10 @@
 
     # Raspberry PI
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    # Ez
+    ez-configs.url = "github:ehllie/ez-configs";
+    ez-configs.inputs.nixpkgs.follows = "nixpkgs";
+    ez-configs.inputs.flake-parts.follows = "flake-parts";
   };
 }

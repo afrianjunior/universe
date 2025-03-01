@@ -72,6 +72,29 @@
         "type": "github"
       }
     },
+    "ez-configs": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737976685,
+        "narHash": "sha256-YGDoq5mHjaUiv79oICntM3nybdzvvBRZGe5cZ6kY73w=",
+        "owner": "ehllie",
+        "repo": "ez-configs",
+        "rev": "84cce474cc25b451e77fc05a1a3d32c47706ea3a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ehllie",
+        "repo": "ez-configs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -433,6 +456,7 @@
       "inputs": {
         "devenv": "devenv",
         "disko": "disko",
+        "ez-configs": "ez-configs",
         "flake-parts": "flake-parts_2",
         "git-hooks-nix": "git-hooks-nix",
         "home-manager": "home-manager",
