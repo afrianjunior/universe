@@ -7,7 +7,7 @@
 
 {
   home = rec {
-    username = "juunnx";
+    username = "juunn";
     stateVersion = "24.11";
     homeDirectory = osConfig.users.users.${username}.home;
   };

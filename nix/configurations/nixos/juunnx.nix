@@ -83,9 +83,9 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.juunnx = {
+  users.users.juunn = {
     isNormalUser = true;
-    description = "juunnx";
+    description = "juunn";
     extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [
     #  thunderbird
@@ -158,25 +158,25 @@
      nix-search
   ];
 
-  systemd.user.services.wl-clip-persist = {
-    enable = true;
-    description = "clipboard sync persist";
-    serviceConfig = {
-      ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist -d";
-      Restart = "always";
-    };
-    wantedBy = [ "default.target" ];
-  };
+  # systemd.user.services.wl-clip-persist = {
+  #   enable = true;
+  #   description = "clipboard sync persist";
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist -d";
+  #     Restart = "always";
+  #   };
+  #   wantedBy = [ "default.target" ];
+  # };
 
-  services.vsftpd = {
-    enable = true;
-    writeEnable = true;
-    extraConfig = ''
-      pasv_enable=Yes
-      pasv_min_port=51000
-      pasv_max_port=56260
-    '';
-  };
+  # services.vsftpd = {
+  #   enable = true;
+  #   writeEnable = true;
+  #   extraConfig = ''
+  #     pasv_enable=Yes
+  #     pasv_min_port=51000
+  #     pasv_max_port=56260
+  #   '';
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -201,12 +201,12 @@
   programs.ssh.startAgent = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 21 ];
-  networking.firewall.connectionTrackingModules = ["ftp"];
-  networking.firewall.allowedTCPPortRanges = [{ from= 51000; to = 56260; }];
+  # networking.firewall.allowedTCPPorts = [ 21 ];
+  # networking.firewall.connectionTrackingModules = ["ftp"];
+  # networking.firewall.allowedTCPPortRanges = [{ from= 51000; to = 56260; }];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = true;
+  # networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

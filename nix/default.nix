@@ -14,7 +14,7 @@
     nixos.configurationsDirectory = ./configurations/nixos;
 
     nixos.hosts = {
-      juunnx.userHomeModules = ["juunnx"];
+      juunnx.userHomeModules = ["juunn"];
     };
   };
 
