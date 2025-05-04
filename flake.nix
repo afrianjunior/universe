@@ -54,5 +54,38 @@
     ez-configs.url = "github:ehllie/ez-configs";
     ez-configs.inputs.nixpkgs.follows = "nixpkgs";
     ez-configs.inputs.flake-parts.follows = "flake-parts";
+
+    # Astal
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Nixvim
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    snacks-nvim = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
+
+    # Browser
+    zen-browser = {
+      url = "github:afrianjunior/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Hyprland
+    hypr-darkwindow = {
+      url = "github:micha4w/Hypr-DarkWindow/tags/v0.36.0";
+    };
   };
 }

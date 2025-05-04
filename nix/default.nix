@@ -16,18 +16,32 @@
     nixos.hosts = {
       juunnx.userHomeModules = ["juunn"];
     };
+
+    globalArgs = {
+      inherit inputs;
+    };
   };
 
   perSystem =
     {
       pkgs,
       config,
+      system,
       ...
     }:
     {
       pre-commit.settings.hooks = {
         deadnix.enable = true;
         nixfmt-rfc-style.enable = true;
+      };
+
+      packages = {
+        # Define nixvim build using your own config folder
+        nixvim = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          inherit system;
+          module = import ./nixvim/config; # path to your config like elythh
+          extraSpecialArgs = { inherit inputs; };
+        };
       };
 
       devShells = {

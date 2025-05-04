@@ -7,19 +7,19 @@
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
-
+  
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f3d38ccb-25fd-4177-9122-603fa8ff0a47";
+    { device = "/dev/disk/by-uuid/fd509b75-1377-4659-840a-ec9cc630be47";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5089-D43E";
+    { device = "/dev/disk/by-uuid/3427-B86C";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
@@ -33,20 +33,6 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp9s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
-
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-
-  hardware.graphics = {
-    enable = true;
-  };
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    open = true;
-    nvidiaSettings = true;
-  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
